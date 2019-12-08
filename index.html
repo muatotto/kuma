@@ -1,0 +1,74 @@
+<meta charset="UTF-8" />
+<script src='vue.min.js'></script>
+<link href="https://fonts.googleapis.com/css?family=Kosugi+Maru|Pacifico&display=swap" rel="stylesheet"> 
+<title>くまが送るカウントダウン</title> 
+<style>
+	body {
+		margin: 0;
+	}
+</style>
+<div id='app'>
+	<svg :width='W' :height='H'>
+		<image :x='x' :y='y' :width='w' :height='h' href='kuma.png' />
+		<text :x='W/2-w/20' :y='y+h/10' :font-size='size*0.5' font-family='Kosugi Maru' fill='#5c5c5c' text-anchor='middle'>修論から解放まで</text>
+		<text :x='tx' :y='ty' :font-size='size' font-family='Pacifico' fill='#279bfc'>{{day}}</text>
+	</svg>
+</div>
+<script>
+var app = new Vue({
+	el: '#app',
+	data: {
+		W: 1000,
+		H: 1000,
+		rw: 1536,
+		rh: 2048,
+		day: '',
+	},
+	computed: {
+		ratio: function() {
+			return this.rh/this.rw;
+		},
+		wide: function() {
+			return this.H/this.W < this.ratio;
+		},
+		w: function() {
+			return this.wide ? this.H/this.ratio : this.W;
+		},
+		h: function() {
+			return this.wide ? this.H : this.ratio*this.W;
+		},
+		x: function() {
+			return this.wide ? this.W/2-this.H/2/this.ratio : 0;
+		},
+		y: function() {
+			return this.wide ? 0 : this.H/2-this.W/2*this.ratio;
+		},
+		tx: function() {
+			return this.x + 0.365*this.w;
+		},
+		ty: function() {
+			return this.y + 0.67*this.h;
+		},
+		size: function() {
+			return this.w/9;
+		},
+	},
+	mounted: function() {
+		this.W = window.innerWidth;
+		this.H = window.innerHeight;
+		var today = Date.now();
+		var end = new Date('2020-02-06');
+		this.day = Math.floor((end-today)/(1000*60*60*24));
+		if(this.day<10){
+			this.day = '0' + this.day;
+		}
+		window.addEventListener('resize', this.resized);
+	},
+	methods: {
+		resized: function() {
+			this.W = window.innerWidth;
+			this.H = window.innerHeight;
+		},
+	},
+});
+</script>
