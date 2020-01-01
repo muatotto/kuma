@@ -57,18 +57,20 @@ var app = new Vue({
 		this.W = window.innerWidth;
 		this.H = window.innerHeight;
 		var today = Date.now();
-		var end = new Date('2020-02-06');
+		var end = new Date('2020-02-06T00:00:00.000+09:00');
 		this.day = Math.floor((end-today)/(1000*60*60*24));
-		if(this.day<10){
+		if(this.day<10 && this.day>=0){
 			this.day = '0' + this.day;
+		}else if(this.day<0){
+			this.day = '00';
 		}
-		window.addEventListener('resize', this.resized);
+		//window.addEventListener('resize', this.resized);
 	},
-	methods: {
-		resized: function() {
-			this.W = window.innerWidth;
-			this.H = window.innerHeight;
-		},
-	},
+	// methods: {
+	// 	resized: function() {
+	// 		this.W = window.innerWidth;
+	// 		this.H = window.innerHeight;
+	// 	},
+	// },
 });
 </script>
