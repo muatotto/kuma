@@ -58,7 +58,7 @@ var app = new Vue({
 		this.H = window.innerHeight;
 		var today = Date.now();
 		var end = new Date('2020-02-06T00:00:00.000+09:00');
-		this.day = Math.floor((end-today)/(1000*60*60*24));
+		this.day = Math.floor((end-today)/(1000*60*60*24))+1;
 		if(this.day<10 && this.day>=0){
 			this.day = '0' + this.day;
 		}else if(this.day<0){
